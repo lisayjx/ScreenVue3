@@ -6,7 +6,7 @@
     <div class="left-top"> <PieEcharts :echartDatas="pieData"></PieEcharts> </div>
     <div class="left-bottom"><LineEcharts :echartDatas="lineData"></LineEcharts>  </div>
 
-    <div class="right-top"></div>
+    <div class="right-top"><right-top-panel :percentage="chargingtop4Per" :panelItems="chargingTopFour"></right-top-panel> </div>
     <div class="right-center"> <BarEcharts :echartDatas="barData"></BarEcharts></div>
     <div class="right-bottom"><RightBottomSvg :dots="exceptionMonitor"></RightBottomSvg> </div>
 
@@ -23,8 +23,9 @@ import BarEcharts from "../components/bar-echarts.vue";
 import RightBottomSvg from '../components/right-bottom-svg.vue'
 import Center from '../components/center.vue'
 import BottomPanel from '../components/bottom-panel.vue'
+import rightTopPanel from "../components/right-top-panel.vue";
 import { onMounted, ref } from "vue";
-import {pieDatas,lineDatas,barDatas,exceptionMonitoring,dataAnalysis } from './config/home-data.js'
+import {pieDatas,lineDatas,barDatas,exceptionMonitoring,dataAnalysis,chargingTop4 } from './config/home-data.js'
 import {getScreenData} from '../api/index.js'
  
 
@@ -37,7 +38,8 @@ let barData=ref(barDatas)
 // 中下 数据分析
 let dataAnaly=ref(dataAnalysis)
 // top4 水球
-let chargingTop4=ref(null)
+let chargingTopFour=ref(chargingTop4)
+let chargingtop4Per=ref(0)
 // 右下角 监控
 let exceptionMonitor=ref(exceptionMonitoring)
 
@@ -46,7 +48,8 @@ getScreenData().then(res=>{
   pieData.value=res.data.chargingPile.data
   lineData.value=res.data.processMonitoring.data
   dataAnaly.value=res.data.dataAnalysis.data
-  chargingTop4.value=res.data.chargingTop4.data
+  chargingTopFour.value=res.data.chargingTop4.data
+  chargingtop4Per.value=res.data.chargingTop4.totalPercentage
   barData.value=res.data.chargingStatistics.data
   exceptionMonitor.value=res.data.exceptionMonitoring.data
 })

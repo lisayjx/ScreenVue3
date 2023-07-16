@@ -1232,6 +1232,8 @@
 </template>
 
 <script setup>
+import  gsap  from 'gsap';
+import { onMounted } from 'vue';
 let city = [
   "icon_star_guangzhou",
   "icon_home_foshan",
@@ -1240,6 +1242,25 @@ let city = [
   "icon_earth_dongguan",
   "icon_pie_shenzhen",
 ];
+
+onMounted(()=>{
+  // 入场动画
+const timeline=gsap.timeline()
+timeline
+    .fromTo(
+      "#dongxiao", 
+      { // 0%
+        duration: 1,
+        scale: 0.8,
+        y: 40, 
+      },
+      {//100%
+        duration: 1,
+        scale: 1,
+        y: 0,
+      }
+    )
+})
 </script>
 <style scoped>
 .cls-1,
